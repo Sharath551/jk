@@ -1,0 +1,116 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    int val;
+    struct node *next;
+};
+
+void insert(int val,int size,struct node *chain[]){
+    struct node *newnode=(struct node *)malloc(sizeof(struct node));
+    newnode->val=val;
+    newnode->next=NULL;
+    
+    int key=val%size;
+    
+    if(chain[key]==NULL) chain[key]=newnode;
+    else{
+        struct node *temp = chain[key];
+        while(temp->next) temp=temp->next;
+        temp->next=newnode;
+    }
+}
+
+void print(int size,struct node *chain[]){
+    for(int i=0;i<size;i++){
+        struct node *temp = chain[i];
+        printf("chain[%d]----->",i);
+        while(temp){
+            printf("%d----->",temp->val);
+            temp=temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+
+int search(int val,struct node *chain[],int size){
+    int key=val%size;
+    struct node *temp=chain[key];
+    while(temp){
+        if(temp->val == val) return 1;
+        temp=temp->next;
+    }
+    return 0;
+}
+
+int delete(int val,struct node *chain[],int size){
+    int key=val%size;
+    struct node *temp=chain[key];
+    if(temp!=NULL){
+        if(temp->val==val){
+            temp=temp->next;
+            return 1;
+        }
+        else{
+            while(temp->next){
+                if(temp->next->val==val) temp->next=temp->next->next;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int main()
+{
+   
+    int size;
+    printf("Enter the size of the memory : ");
+    scanf("%d",&size);
+    struct node *chain[size];
+    for(int i=0;i<size;i++) chain[i]=NULL;
+    
+    int value,temp;
+    int opt;
+    printf("Hash table options : \n 1-insert 2-print 3-search 4-delete\n");
+    while(1){
+        printf("option : ");
+        scanf("%d",&opt);
+        switch(opt){
+            case 1:
+             printf("Enter the value to insert : ");
+             scanf("%d",&value);
+             insert(value,size,chain);
+             break;
+            case 2:
+             print(size,chain);
+             break;
+            case 3:
+             printf("Enter the value to search : ");
+             scanf("%d",&value);
+             temp=search(value,chain,size);
+             if(temp) printf("value %d found\n",value);
+             else printf("There is no such value\n");
+             break;
+            case 4:
+             printf("Enter the value to be deleted : ");
+             scanf("%d",&value);
+             temp=delete(value,chain,size);
+             if(temp) printf("Element deleted !\n");
+             else printf("Element not found !\n");
+             break;
+            default:
+             printf("INVALID COMMAND\n");
+        }
+    }
+    
+    return 0;
+}

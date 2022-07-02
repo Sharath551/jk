@@ -1,0 +1,72 @@
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+
+import java.util.*;
+
+public class Main
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the No of Object: ");
+		int noOfInp = sc.nextInt();
+		
+		System.out.println("Enter the Size of Bag: ");
+		int bagSize = sc.nextInt();
+		
+		int[] weight = new int[noOfInp];
+		int[] prices = new int[noOfInp];
+		
+		System.out.println("Enter the weights : ");
+		
+		for(int idx = 0;idx < noOfInp;idx++)
+		{
+		    weight[idx] = sc.nextInt();
+		}
+		
+		System.out.println("Enter the prices : ");
+		
+		for(int idx = 0;idx < noOfInp;idx++)
+		{
+		    prices[idx] = sc.nextInt();
+		}
+		
+// 		System.out.println(Arrays.toString(weight ) + " " + Arrays.toString(prices));
+
+        
+        int[][] dp = new int[noOfInp+1][bagSize+1];
+        
+        
+        for(int r = 0;r <= noOfInp;r++)
+        {
+            for(int c = 0;c <= bagSize;c++)
+            {
+                if(r == 0 || c == 0) dp[r][c] = 0;
+                else if (weight[r-1] <= c)
+                {
+                    dp[r][c] = Math.max(dp[r-1][c],dp[r-1][c-weight[r-1]] + prices[r-1]);
+                }
+                else
+                {
+                    dp[r][c] = dp[r-1][c];
+                }
+            }
+        }
+        
+        
+        // for (int[] x : dp)
+        // {
+        //     System.out.println(Arrays.toString(x));
+        // }
+        
+        
+        System.out.println("Maximum Profit :" + dp[noOfInp][bagSize]);
+
+}
+}

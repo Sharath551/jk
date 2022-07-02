@@ -1,0 +1,54 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+
+int n;
+void heapify(int arr[],int n,int i ){
+    int largest = i;
+    int l=2*i+1;
+    int r=2*i+2;
+    if(l<n && arr[l]>arr[i]) largest=l;
+    if(r<n && arr[r]>arr[i]) largest=r;
+    if(largest!=i){
+        int temp = arr[i];
+        arr[i]=arr[largest];
+        arr[largest]=temp;
+        
+        heapify(arr,n,largest);
+    }
+}
+
+void buildheap(int arr[],int n){
+    int sidx=(n/2)-1;
+    for(int i=sidx;i>=0;i--){
+        heapify(arr,n,i);
+    }
+}
+
+void printheap(int heap[],int n){
+    for(int i=0;i<n;i++){
+        printf("%d",heap[i]);
+    }
+
+}
+
+int main()
+{
+    printf("Enter the total number of values to be entered : ");
+    scanf("%d",&n);
+    int heap[n];
+    printf("Enter the heap : ");
+    for(int i=0;i<n;i++){
+       scanf("%d",&heap[i]);
+    }
+     buildheap(heap,n);
+     printheap(heap,n);
+
+    return 0;
+}

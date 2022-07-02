@@ -1,0 +1,56 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+
+int main()
+{
+    int n;
+    printf("Enter the number of vertices : ");
+    scanf("%d",&n);
+    int adj[n][n],indeg[n],visited[n];
+    printf("Enter the adjecency martix : ");
+    for(int i=0;i<n;i++){
+        printf("Enter 1 if there is outgoing edge from %d else 0: \n",i);
+        for(int j=0;j<n;j++){
+         printf("From %d to %d : ",i,j);
+         scanf("%d",&adj[i][j]);
+        }
+    }
+    
+    for(int i=0;i<n;i++){
+         indeg[i]=0;
+         visited[i]=0;
+    }
+    
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            indeg[i]=indeg[i]+adj[j][i];
+        }
+    }
+    
+    int count=0;
+    while(count<n){
+        for(int i=0;i<n;i++){
+            if(indeg[i]<=0 && visited[i]==0){
+                printf("%d ",i);
+                visited[i]=1;
+            }
+            if(visited[i]==1)
+            for(int j=0;j<n;j++){
+                if(adj[i][j]==1)
+                indeg[j]--;
+            }
+          
+        }
+        
+        count++;
+    }
+    
+    return 0;
+}

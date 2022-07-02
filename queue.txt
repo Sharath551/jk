@@ -1,0 +1,65 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+int opt,queue[3],rear=-1,front=-1,max_size=sizeof(queue)/sizeof(int);
+void enqueue(){
+    
+    if(rear>=max_size-1){
+        printf("queue is Overflowed \n");
+    }
+    else{
+        int c;
+        printf("Enter the value to be pushed : ");
+        scanf("%d",&c);
+        if(front==-1) front=0;
+        rear=rear+1;
+        queue[rear]=c;
+    }
+}
+void dequeue(){
+    if(front==-1||front>rear){
+        printf("queue is underflowed \n");
+    }
+    else{
+        front=front+1;
+        printf("An Element is removed \n");
+    }
+}
+void show(){
+    printf("The Elements are : ");
+    for(int i=front;i<=rear;i++){
+        printf("%d",queue[i]);
+    }
+}
+int main()
+{
+    printf("select the options : \n 1-enqueue 2-dequeue 3-show 4-exit \n");
+  while(1){
+    printf("option : ");
+    scanf("%d",&opt);
+    switch(opt){
+        case 1:
+          enqueue();
+          break;
+        case 2:
+          dequeue();
+          break;
+        case 3:
+           show();
+           printf("\n");
+           break;
+        case 4:
+           printf("------Thank You------ \n");
+           return 0;
+        default:
+           printf("Incorrect choice \n");
+    }
+ }
+    return 0;
+}

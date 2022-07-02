@@ -1,0 +1,96 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+
+int opt,queue[5],rear=-1,front=-1,max_size=sizeof(queue)/sizeof(int);
+int is_full(){
+    if(front==rear+1 || (front==0 && rear == max_size-1) ){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+int is_empty(){
+    if(front==-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+void enqueue(){
+    
+    if(is_full()){
+        printf("queue is full \n");
+    }
+    else{
+        int c;
+        printf("Enter the value to be pushed : ");
+        scanf("%d",&c);
+        if(front==-1) front=0;
+        rear=(rear+1)%max_size;
+        queue[rear]=c;
+        printf("inserted Element is %d \n",c);
+    }
+}
+void dequeue(){
+    if(is_empty()){
+        printf("queue is empty \n");
+    }
+    else{
+        if(front==rear){
+            front=-1;
+            rear =-1;
+        }
+        else{
+            front=(front+1)%max_size;
+        printf("An element is removed \n");
+        }
+    }
+}
+void show(){
+    if(is_empty()){
+        printf("The queue is empty");
+    }
+    else{
+        printf("The Elements are : ");
+    for(int i=front;i!=rear;i=(i+1)%max_size){
+        printf("%d",queue[i]);
+    }
+        printf("%d",queue[rear]); 
+    }
+}
+int main()
+{
+    printf("select the options : \n 1-enqueue 2-dequeue 3-show 4-exit \n");
+  while(1){
+    printf("option : ");
+    scanf("%d",&opt);
+    switch(opt){
+        case 1:
+          enqueue();
+          break;
+        case 2:
+          dequeue();
+          break;
+        case 3:
+           show();
+           printf("\n");
+           break;
+        case 4:
+           printf("------Thank You------ \n");
+           return 0;
+        default:
+           printf("Incorrect choice \n");
+    }
+ }
+    return 0;
+}
+

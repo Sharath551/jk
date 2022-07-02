@@ -1,0 +1,50 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+char stack[100];
+int  opt, max_size= sizeof(stack)-1 , top = -1;
+void push(char c){
+    if(top>= max_size){
+        printf("stack is overflowed");
+    }
+    else{
+       
+        stack[++top]=c;
+        
+    }
+    
+}
+char pop(){
+    if(top<=-1){
+        printf("Stack is emptied");
+        
+    }
+    else{
+        return stack[top--];
+    }
+}
+int main()
+{  
+    char arr[100];
+    printf("Enter the string : \n");
+    scanf("%s",arr);
+    int i=0;
+    while(arr[i]!='\0'){
+        push(arr[i]);
+        i++;
+    }
+    printf("Reverse : \n");
+    for(int i=top;i>=0;i--){
+        char rev= pop();
+        printf("%c",rev);
+    }
+    
+
+    return 0;
+}

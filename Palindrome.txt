@@ -1,0 +1,60 @@
+/******************************************************************************
+
+Welcome to GDB Online.
+GDB online is an online compiler and debugger tool for C, C++, Python, PHP, Ruby, 
+C#, VB, Perl, Swift, Prolog, Javascript, Pascal, HTML, CSS, JS
+Code, Compile, Run and Debug online from anywhere in world.
+
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+char stack[100];
+int  opt, max_size= sizeof(stack)-1 , top = -1;
+void push(char c){
+    if(top>= max_size){
+        printf("stack is overflowed");
+    }
+    else{
+       
+        stack[++top]=c;
+        
+    }
+    
+}
+char pop(){
+    if(top<=-1){
+        printf("Stack is emptied");
+        
+    }
+    else{
+        return stack[top--];
+    }
+}
+int main()
+{  
+    int count =0;
+    char arr[100];
+    printf("ENTER THE STRING : \n");
+    scanf("%s",arr);
+    int i=0;
+    while(arr[i]!='\0'){
+        push(arr[i]);
+        i++;
+    }
+    for(int i=0;i<strlen(stack)/2;i++){
+         if (stack[top] == stack[count]) {
+          pop();
+          count++;
+         }
+         else{
+             printf("Its not a palindrome");
+             break;
+         }
+    }
+    if(strlen(stack)/2==count){
+        printf("It is palindrome");
+    }
+
+    return 0;
+}

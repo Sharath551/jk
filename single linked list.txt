@@ -1,0 +1,172 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *link;
+};
+ 
+void print_data(struct node *head){
+    if(head==NULL) printf("The List is empty\n");
+    else{
+        struct node *ptr=NULL;
+        ptr=head;
+        printf("\nThe data are : ");
+        while(ptr!=NULL){
+         printf("%d ",ptr->data);
+         ptr = ptr->link;
+        }
+        printf("\n");
+    }
+}
+ 
+void insert_at_end(struct node *head){
+    if(head==NULL) printf("The List is empty\n");
+    else{
+        int data;
+        printf("Enter the data to be inserted : ");
+        scanf("%d",&data);
+        
+        struct node *ptr,*temp;
+        ptr=head;
+        temp=(struct node*)malloc(sizeof(struct node));
+        
+        temp->data=data;
+        temp->link=NULL;
+        
+        while(ptr->link!=NULL){
+            ptr=ptr->link;
+        }
+        ptr->link = temp;
+    }
+}
+
+struct node* insert_at_start(struct node *head){
+    if(head==NULL) printf("The List is empty\n");
+    else{
+        int data;
+        printf("Enter the data to be inserted : ");
+        scanf("%d",&data);
+        
+        struct node *temp = NULL;
+        temp =(struct node *)malloc(sizeof(struct node));
+        temp->data = data ;
+        temp->link = head ;
+        head = temp;
+        return head;
+    }
+}
+
+struct node* del_first(struct node *head){
+    if(head==NULL) printf("The List is empty");
+    else{
+    struct node *temp = head;
+    head = head->link;
+    free(temp);
+    temp = NULL;
+    }
+    return head;
+}
+
+struct node* del_last(struct node *head){
+    if(head==NULL) printf("The List is empty");
+    else if(head->link==NULL){
+        free(head);
+        head=NULL;
+    }
+    else{
+        struct node *temp= head;
+        while(temp->link->link != NULL){
+            temp = temp->link;
+        }
+        free(temp->link);
+        temp->link=NULL;
+    }
+    return head;
+}
+
+void del_by_key(struct node **head_ref){
+    int key;
+    printf("Enter the value : ");
+    scanf("%d",&key);
+    struct node *temp,*prev;
+    temp = *head_ref;
+    if(temp!=0 && temp->data == key){
+        *head_ref = temp->link;
+        free(temp);
+    }
+    
+    while(temp!=0 && temp->data!=key){
+        prev = temp;
+        temp = temp->link;
+    }
+    
+    if(temp==NULL) return;
+    
+    prev->link = temp->link;
+    free(temp);
+    
+}
+
+int main()
+{
+    struct node *head = NULL;
+    head = (struct node *)malloc(sizeof(struct node));
+    printf("Enter the data of first node : ");
+    scanf("%d",&head->data);
+    head -> link = NULL;
+    
+    struct node *current = NULL;
+    current = (struct node *)malloc(sizeof(struct node));
+    printf("\nEnter the data of second node : ");
+    scanf("%d",&current->data);
+    current -> link = NULL;
+    head -> link = current;
+    
+    current = (struct node *)malloc(sizeof(struct node));
+     printf("\nEnter the data of third node : ");
+    scanf("%d",&current->data);
+    current -> link = NULL;
+    head->link->link = current;
+    print_data(head);
+    
+    int opt;
+    printf("SELECT THE OPTIONS AS BELOW : \n1 - insert at first 2 - insert at last\n 3 - delete at first 4 - delete at last\n 5 - Display 6 - exit\n7 - delete by value\n");
+    while(1){
+        printf("option : ");
+        scanf("%d",&opt);
+        switch(opt){
+            case 1:
+             head = insert_at_start(head);
+             break;
+            case 2:
+             insert_at_end(head);
+             break;
+            case 3:
+             head = del_first(head);
+             break;
+            case 4:
+             head = del_last(head);
+             break;
+            case 5:
+             print_data(head);
+             break;
+            case 6:
+             return 0 ;
+            case 7:
+             del_by_key(&head);
+             break;
+            default :
+             printf("Invalid command\n");
+        }
+    }
+    return 0;
+}

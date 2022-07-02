@@ -1,0 +1,110 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+
+void insert(int val,int chain[],int size){
+    int key = val%size;
+    int count =0;
+    if(chain[key]==0) chain[key]=val;
+    else{
+        while(chain[key]!=0 && count<size){
+        key=(key+1)%size;
+        count++;
+        }
+        if(count==size) printf("No space !\n");
+        else  chain[key]=val;
+    }
+}
+
+void print(int size,int chain[]){
+    for(int i=0;i<size;i++){
+        printf("chain[%d]----->",i);
+        printf("%d\n",chain[i]);
+       
+    }
+}
+
+int search(int val,int chain[],int size){
+    int key=val%size;
+    int count=0;
+    if(chain[key]==val) return 1;
+    else{
+        while(chain[key]!=val && count<size){
+           key=(key+1)%size;
+           count++;
+        } 
+        if(count==size) return 0;
+        else return 1;
+    }
+}
+
+int delete(int val,int chain[],int size){
+    int key=val%size;
+    int count=0;
+    if(chain[key]==val){
+        chain[key]=0;
+        return 1;
+    }
+    else{
+        while(chain[key]!=val && count<size){
+           key=(key+1)%size;
+           count++;
+        } 
+        if(count==size) return 0;
+        else{
+            chain[key]=0;
+            return 1;
+        }
+    }
+}
+
+int main()
+{
+    int size;
+    printf("Enter the size of the memory : ");
+    scanf("%d",&size);
+    int chain[size];
+    for(int i=0;i<size;i++) chain[i]=0;
+    
+    int value,temp;
+    int opt;
+    printf("Hash table options : \n 1-insert 2-print 3-search 4-delete\n");
+    while(1){
+        printf("option : ");
+        scanf("%d",&opt);
+        switch(opt){
+            case 1:
+             printf("Enter the value to insert : ");
+             scanf("%d",&value);
+             insert(value,chain,size);
+             break;
+            case 2:
+             print(size,chain);
+             break;
+            case 3:
+             printf("Enter the value to search : ");
+             scanf("%d",&value);
+             temp=search(value,chain,size);
+             if(temp) printf("value %d found\n",value);
+             else printf("There is no such value\n");
+             break;
+            case 4:
+             printf("Enter the value to be deleted : ");
+             scanf("%d",&value);
+             temp=delete(value,chain,size);
+             if(temp) printf("Element deleted !\n");
+             else printf("Element not found !\n");
+             break;
+            default:
+             printf("INVALID COMMAND\n");
+        }
+    }
+
+    return 0;
+}

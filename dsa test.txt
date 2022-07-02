@@ -1,0 +1,102 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *prev;
+    struct node *next;
+};
+
+struct node* new_node(struct node *head){
+    int data;
+    printf("Enter Your Data : ");
+    scanf("%d",&data);
+    struct node *temp = (struct node*)malloc(sizeof(struct node));
+    temp->data=data;
+    temp->prev=NULL;
+    temp->next=NULL;
+    head=temp;
+    return head;
+    
+}
+struct node* insert(struct node *head){
+    // int n ;
+    // scanf("%d",&n);
+    // for(int i=0;i<n;i++){
+    struct node *temp;
+    struct node *newp = (struct node *)malloc(sizeof(struct node));
+    int data;
+    printf("Enter the data : ");
+    scanf("%d",&data);
+    newp->data = data;
+    newp->prev = NULL;
+    newp->next = NULL;
+    
+    if(head==NULL || data<head->data){
+        newp->next = head;
+        newp->prev = NULL;
+        head = newp;
+    }
+    else{
+        temp = head;
+        while(temp->next != NULL && temp->next->data < data ){
+            temp = temp->next;
+        }
+        newp->next = temp->next;
+        // temp->next->prev = newp;
+        temp->next = newp;
+        newp->prev = temp;
+    // }
+    }
+    return head;
+}
+
+void print_data(struct node *head){
+    if(head==NULL) printf("\nThe list is empty");
+    else{
+    struct node *ptr = head;
+    printf("The data are : ");
+    while(ptr != NULL){
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+    }
+    printf("\n");
+  }
+}
+
+int main()
+{   struct node *head = NULL;
+   
+     
+    head = insert(head);
+    print_data(head);
+    int opt;
+    printf("Enter the options as follows : \n");
+    while(1){
+        printf("option : ");
+        scanf("%d",&opt);
+        
+        switch(opt){
+            case 1 :
+             head = insert(head);
+             break;
+            case 2 :
+             print_data(head);
+             break;
+            case 3 :
+             return 0;
+            default :
+             printf("INVALID COMMAND");
+             
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,93 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+ 
+char stack[100];
+int  opt, max_size= sizeof(stack)-1 , top = -1;
+void push(char c){
+    if(top>= max_size){
+        printf("stack is overflowed");
+    }
+    else{
+       
+        stack[++top]=c;
+        
+    }
+    
+}
+char pop(){
+    if(top<=-1){
+        printf("Stack is emptied");
+        
+    }
+    else{
+        return stack[top--];
+    }
+}
+void display(){
+    for(int i=0;i<=top;i++){
+        printf("%c",stack[i]);
+    }
+}
+int isEmpty()
+{
+    
+    if(top == -1)
+    {
+        return 1;
+    }
+    else
+    {
+        
+        return 0;
+    }
+}
+
+
+int main()
+{
+   char arr[100];
+   scanf("%s",arr);
+   int flag = 0;
+   int i=0;
+   while(arr[i]!='\0'){
+     if(arr[i]=='['||arr[i]=='{'||arr[i]=='('){
+            push(arr[i]);
+        } 
+     else if (arr[i]==']'||arr[i]=='}'||arr[i]==')'){
+            if(isEmpty()) 
+            {
+                flag  = 1;
+                break;
+            }
+            
+            char brac = pop();
+            
+            if((brac == '(' && arr[i] == ')')||(brac == '['&& arr[i]==']')||(brac=='{'&& arr[i]=='}')) 
+            {
+                i++;
+        
+                continue;
+            }
+            
+            else {  flag=1;
+                    break;
+            }
+            
+     
+   }
+   
+   i++;
+   }
+   if(flag== 0 && isEmpty) printf("Matched");
+   else printf("Not Matched");
+    return 0;
+}
+
+
